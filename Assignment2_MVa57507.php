@@ -36,8 +36,9 @@ if (isset($_POST["submit"])) {
     if (!ValidatePage::validateInput()) {
         HTMLPage::displayForm(ValidatePage::$valid_result);
         HTMLPage::displayErrorMessage(ValidatePage::$errorMessage);
-    }
-    else {
+        var_dump(ValidatePage::$valid_result);
+        var_dump(ValidatePage::$errorMessage);
+    } else {
         //Not showing !
         HTMLPage::displayThanks();
         HTMLPage::displayData();

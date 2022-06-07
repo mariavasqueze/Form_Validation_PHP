@@ -65,11 +65,11 @@ class HTMLPage
                     <legend>Douglas Student Info Page</legend>
                     <div>
                         <label for="fullName">Full Name</label>
-                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?= htmlspecialchars($valid_status['name']) ?>">
+                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?= htmlspecialchars($valid_status[0]) ?>">
                     </div>
                     <div>
                         <label for="email">Email Address</label>
-                        <input type="email" name="email" id="email" placeholder="someone@here.ca">
+                        <input type="email" name="email" id="email" placeholder="someone@here.ca" value="<?= htmlspecialchars($valid_status[1]) ?>">
                     </div>
                     <div>
                         <label for="studentID">Student ID</label>
@@ -93,10 +93,10 @@ class HTMLPage
                     </div>
                     <div>
                         <label for="years">Number of Years at Douglas</label>
-                        <input type="text" name="years" id="years" placeholder="number of years less than 7">
+                        <input type="text" name="years" id="years" placeholder="number of years less than 7" value="<?= htmlspecialchars($_POST['years']) ?>">
                     </div>
                     <div>
-                        <label for="courses">Number of Courses Taken</label>
+                        <label for=" courses">Number of Courses Taken</label>
                         <input type="text" name="courses" id="courses" placeholder="number of courses taken">
                     </div>
                     <div>
