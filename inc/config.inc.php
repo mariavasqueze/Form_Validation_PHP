@@ -15,4 +15,3 @@ ini_set('error_log', LOGFILE);
   
 // logging the error 
 //error_log($error_message); 
-?>

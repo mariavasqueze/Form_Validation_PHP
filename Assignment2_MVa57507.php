@@ -32,12 +32,13 @@ HTMLPage::displayHeader();
 //     // If there was post data and there were no errors...
 //     // Display thank you message
 //     // Display the data
-if (isset($_POST['sumbit'])) {
-    // HTMLPage::displayForm(ValidatePage::$valid_result);
-    if (ValidatePage::validateInput() == false) {
+if (isset($_POST["submit"])) {
+    if (!ValidatePage::validateInput()) {
         HTMLPage::displayForm(ValidatePage::$valid_result);
         HTMLPage::displayErrorMessage(ValidatePage::$errorMessage);
-    } else {
+    }
+    else {
+        //Not showing !
         HTMLPage::displayThanks();
         HTMLPage::displayData();
     }
@@ -45,9 +46,6 @@ if (isset($_POST['sumbit'])) {
 // Other than that, display the form
 else {
     HTMLPage::displayForm(ValidatePage::$valid_result);
-
-    //erase
-    HTMLPage::displayErrorMessage(ValidatePage::$errorMessage);
 }
 
 // Show the footer

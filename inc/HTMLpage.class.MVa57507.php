@@ -36,7 +36,7 @@ class HTMLPage
 
         <body>
             <header>
-                <h1>Assignment 2: Form Processing by <?= htmlentities(DEVELOPER_NAME) ?>-- <?= htmlentities(DEVELOPER_ID) ?></h1>
+                <h1>Assignment 2: Form Processing by <?= DEVELOPER_NAME ?> -- <?= DEVELOPER_ID ?></h1>
             </header>
             <section class="main">
             <?php
@@ -65,7 +65,7 @@ class HTMLPage
                     <legend>Douglas Student Info Page</legend>
                     <div>
                         <label for="fullName">Full Name</label>
-                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?php echo htmlspecialchars($valid_status['fullName']) ?>">
+                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?= htmlspecialchars($valid_status['name']) ?>">
                     </div>
                     <div>
                         <label for="email">Email Address</label>
@@ -119,12 +119,11 @@ class HTMLPage
             <div class="highlight">
                 <p>Please fix the following errors:</p>
                 <ul>
-                    <li><?php echo htmlspecialchars($valid_status['name']) ?></li>
-                    <li><?php echo htmlspecialchars($valid_status['email']) ?></li>
-                    <li><?php echo htmlspecialchars($valid_status['option']) ?></li>
-                    <li><?php echo htmlspecialchars($valid_status['program']) ?></li>
-                    <li><?php echo htmlspecialchars($valid_status['years']) ?></li>
-                    <li><?php echo htmlspecialchars($valid_status['courses']) ?></li>
+                    <?php
+                    foreach ($valid_status as $status) {
+                        echo "<li>$status</li>" . "\n";
+                    }
+                    ?>
                 </ul>
             </div>
         <?php
@@ -149,37 +148,37 @@ class HTMLPage
                 <table>
                     <tr>
                         <th>Name</th>
-                        <td><?= htmlentities($_POST['fullName']) ?></td>
+                        <td><?= $_POST['fullName'] ?></td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td><?= htmlentities($_POST['email']) ?></td>
+                        <td><?= $_POST['email'] ?></td>
                     </tr>
                     <tr>
                         <th>Student ID</th>
-                        <td><?= htmlentities($_POST['studentID']) ?></td>
+                        <td><?= $_POST['studentID'] ?></td>
                     </tr>
                     <tr>
                         <th>International Student Status</th>
-                        <td><?= htmlentities($_POST['international']) ?></td>
+                        <td><?= $_POST['international'] ?></td>
                     </tr>
                     <tr>
                         <th>Program</th>
-                        <td><?= htmlentities($_POST['program']) ?></td>
+                        <td><?= $_POST['program'] ?></td>
                     </tr>
                     <tr>
                         <th>Number of Years</th>
-                        <td><?= htmlentities($_POST['years']) ?></td>
+                        <td><?= $_POST['years'] ?></td>
                     </tr>
                     <tr>
                         <th>Number of Courses</th>
-                        <td><?= htmlentities($_POST['courses']) ?></td>
+                        <td><?= $_POST['courses'] ?></td>
                     </tr>
                 </table>
             </div>
         </section>
 
-<?php
+<?php //<?= htmlentities($_POST['email'])
         }
     }
 
