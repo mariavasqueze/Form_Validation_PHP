@@ -2,7 +2,7 @@
 
 /**
  * Student Name:            Maria Vasquez
- * Student ID:              300357407
+ * Student ID:              300357507
  * Assignment/File Name:    Assignment2
  * Section:                 002
  * 
@@ -10,10 +10,8 @@
  *      This project is a Form Validation in PHP. Makes sure all requirements are met before sumbiting form.
  * 
  * References:
- *      Please make sure you provide the appropriate url references
- *      or any comment for example if you referenced some help you
- *      received from your instructor or demo code provided in class   
- *   
+ *     How to keep buttons checked: Taken from https://stackoverflow.com/questions/50098744/keep-radio-checked-after-submit    
+ *      
  **/
 
 class HTMLPage
@@ -40,24 +38,24 @@ class HTMLPage
             </header>
             <section class="main">
             <?php
-        }
+    }
 
 
-        // This static function close all the HTML tags at the bottom of the document
-        static function displayFooter()
-        {
+    // This static function closes all the HTML tags at the bottom of the document
+    static function displayFooter()
+    {
             ?>
         </body>
 
         </html>
     <?php
-        }
+    }
 
-        // This static function display the form. It gets the information of the valid input 
-        // that can be part of the $errors array variable returned by the validateForm() static function
-        // Note: The correct post data will be displayed within the HTML input object
-        static function displayForm($valid_status)
-        {
+    // This static function display the form. It gets the information of the valid input 
+    // that can be part of the $errors array variable returned by the validateForm() static function
+    // Note: The correct post data will be displayed within the HTML input object
+    static function displayForm($valid_status)
+    {
     ?>
         <div class="form">
             <form action="" method="post">
@@ -65,39 +63,55 @@ class HTMLPage
                     <legend>Douglas Student Info Page</legend>
                     <div>
                         <label for="fullName">Full Name</label>
-                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?= htmlspecialchars($valid_status[0]) ?>">
+                        <input type="text" name="fullName" id="fullName" placeholder="First and last name" value="<?= htmlspecialchars($valid_status['name']) ?>">
                     </div>
                     <div>
                         <label for="email">Email Address</label>
-                        <input type="email" name="email" id="email" placeholder="someone@here.ca" value="<?= htmlspecialchars($valid_status[1]) ?>">
+                        <input type="email" name="email" id="email" placeholder="someone@here.ca" value="<?= htmlspecialchars($valid_status['email']) ?>">
                     </div>
                     <div>
                         <label for="studentID">Student ID</label>
-                        <input type="text" name="studentID" id="studentID" placeholder="XXXXXXX">
+                        <input type="text" name="studentID" id="studentID" placeholder="XXXXXXX" value="<?= htmlspecialchars($valid_status['studentId']) ?>">
                     </div>
                     <div>
                         <label for="international">International Student?</label>
                         <span>
-                            <input type="radio" name="international" id="internationalYes" value="yes"> Yes
-                            <input type="radio" name="international" id="internationalNo" value="no"> No
+                            <input type="radio" name="international" id="internationalYes" value="yes" <?php if (isset($valid_status['international']) && $valid_status['international'] == "yes") {
+                                                                                                            echo "checked";
+                                                                                                        } ?>> Yes
+                            <input type="radio" name="international" id="internationalNo" value="no" <?php if (isset($valid_status['international']) && $valid_status['international'] == "no") {
+                                                                                                            echo "checked";
+                                                                                                        } ?>> No
                         </span>
                     </div>
                     <div>
                         <label for="program">Program</label>
                         <select name="program">
-                            <option value="Select...">Please select one option</option>
-                            <option value="Emerging Technology">Emerging Technology</option>
-                            <option value="Data Analytic">Data Analytic</option>
-                            <option value="Mobile Computing">Mobile Computing</option>
+                            <option disabled selected value>Please select one option</option>
+                            <option value="Emerging Technology" <?php if (isset($valid_status['program'])) {
+                                                                    if ($valid_status['program'] == "Emerging Technology") {
+                                                                        echo 'selected';
+                                                                    }
+                                                                } ?>>Emerging Technology</option>
+                            <option value="Data Analytics" <?php if (isset($valid_status['program'])) {
+                                                                if ($valid_status['program'] == "Data Analytics") {
+                                                                    echo 'selected';
+                                                                }
+                                                            } ?>>Data Analytic</option>
+                            <option value="Mobile Computing" <?php if (isset($valid_status['program'])) {
+                                                                    if ($valid_status['program'] == "Mobile Computing") {
+                                                                        echo 'selected';
+                                                                    }
+                                                                } ?>>Mobile Computing</option>
                         </select>
                     </div>
                     <div>
                         <label for="years">Number of Years at Douglas</label>
-                        <input type="text" name="years" id="years" placeholder="number of years less than 7" value="<?= htmlspecialchars($_POST['years']) ?>">
+                        <input type="text" name="years" id="years" placeholder="number of years less than 7" value="<?= htmlspecialchars($valid_status['years']) ?>">
                     </div>
                     <div>
                         <label for=" courses">Number of Courses Taken</label>
-                        <input type="text" name="courses" id="courses" placeholder="number of courses taken">
+                        <input type="text" name="courses" id="courses" placeholder="number of courses taken" value="<?= htmlspecialchars($valid_status['courses']) ?>">
                     </div>
                     <div>
                         <input type="submit" name="submit" value="Submit Information">
@@ -108,12 +122,12 @@ class HTMLPage
         </div>
         </section>
     <?php
-        }
+    }
 
-        // This static function read the $errors variable returned by the validateForm() static function
-        // and display the error messages
-        static function displayErrorMessage($valid_status)
-        {
+    // This static function read the $errors variable returned by the validateForm() static function
+    // and display the error messages
+    static function displayErrorMessage($valid_status)
+    {
     ?>
         <section class="sidebar">
             <div class="highlight">
@@ -127,21 +141,21 @@ class HTMLPage
                 </ul>
             </div>
         <?php
-        }
+    }
 
-        // This static function display the thank you message
-        static function displayThanks()
-        {
+    // This static function display the thank you message
+    static function displayThanks()
+    {
         ?>
             <div class="highlight">
                 <h3>Thank your for your input.<br></h3>
             </div>
         <?php
-        }
+    }
 
-        // This static function display the submitted data
-        static function displayData()
-        {
+    // This static function display the submitted data
+    static function displayData()
+    {
         ?>
             <div class="data">
                 <b>Entered data is:</b>
@@ -178,8 +192,8 @@ class HTMLPage
             </div>
         </section>
 
-<?php //<?= htmlentities($_POST['email'])
-        }
+<?php 
     }
+}
 
 ?>

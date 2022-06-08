@@ -2,7 +2,7 @@
 
 /**
  * Student Name:            Maria Vasquez
- * Student ID:              300357407
+ * Student ID:              300357507
  * Assignment/File Name:    Assignment2
  * Section:                 002
  * 
@@ -10,33 +10,20 @@
  *      This project is a Form Validation in PHP. Makes sure all requirements are met before sumbiting form.
  * 
  * References:
- *      Please make sure you provide the appropriate url references
- *      or any comment for example if you referenced some help you
- *      received from your instructor or demo code provided in class 
- *      - In class exercise week 4    
- *      - To correct validation of some inputs: https://www.youtube.com/watch?v=xqI2hdDn47k
+ *      In class exercise week 4 
+ *      Demo class week 4   
+ *      To correct validation of some inputs: https://www.youtube.com/watch?v=xqI2hdDn47k
  **/
 
 class ValidatePage
 {
-
     static $valid_result = array();
-
-    // static $valid_result = array(
-    //     'name' => ''
-    // );
 
     static $errorMessage = array();
 
-    // This static function returns an error array. It is up to you on how to implement the 
-    // error array. Make sure that you can use the array to display the error message 
-    // and the validated post data
-    // make sure to update the valid_result attribute everytime you validate an input.
-    // all input are required
-
+    // This static function returns an error array.
     static function validateInput()
     {
-        $valid = true;
         $name = $_POST['fullName'];
         $email = $_POST['email'];
         $studentId = $_POST['studentID'];
@@ -47,77 +34,65 @@ class ValidatePage
 
         //Validate the name
         if (strlen($name < 1)) {
-            array_push(self::$errorMessage, "Please enter a name");
-            $valid = false;
+            array_push(self::$errorMessage, "Please enter a valid name");
         } else {
-            array_push(self::$valid_result, $name);
-            // array_push(self::$valid_result['name'], $name); or 
-            // array_push(self::$valid_result, $valid_result["name"] = $name);
+            self::$valid_result['name'] = $name;
         }
 
-        // Validate the email address, use filter_input    
+        // Validate the email address   
         if (empty($email)) {
             array_push(self::$errorMessage, "Please enter an email address");
-            $valid = false;
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             array_push(self::$errorMessage, "Please enter a valid email address");
-            $valid = false;
         } else {
-            array_push(self::$valid_result, $email);
+            self::$valid_result['email'] = $email;
         }
 
-        //Validate the student id, use filter_input with regexp
+        //Validate the student id
         if (empty($studentId)) {
             array_push(self::$errorMessage, "Please enter a student ID");
-        } else if (!filter_var($studentId, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^\s{0,}[0-9|]{0,}\s{0,}$/")))) {
-            array_push(self::$errorMessage, "Please enter a valid student ID");
-            $valid = false;
+        } else if (!filter_var($studentId, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" =>  "/^\d{3}[\s]?\d{4}$/")))) {
+            array_push(self::$errorMessage, "Please enter a valid 7 digits student ID");
         } else {
-            array_push(self::$valid_result, $studentId);
+            self::$valid_result['studentId'] = $studentId;
         }
 
         // Ensure one of the international status options is checked
         if (!isset($international)) {
-            array_push(self::$errorMessage, "Please select one option");
-            $valid = false;
+            array_push(self::$errorMessage, "Please choose the international status");
         } else {
-            array_push(self::$valid_result, $international);
+            self::$valid_result['international'] = $international;
         }
 
         // Ensure the drop down was selected
         if (!isset(($program))) {
-            array_push(self::$errorMessage, "Please select one of the options from dropdown menu");
-            $valid = false;
+            array_push(self::$errorMessage, "Please select one of the computing sciences programs!");
         } else {
-            array_push(self::$valid_result, $program);
+            self::$valid_result['program'] = $program;
         }
 
-        // Validate the number of years, use filter_input with minimum range (1) and maximum range (6)
+        // Validate the number of years
         if (empty($years)) {
             array_push(self::$errorMessage, "Please enter a number of years");
-            $valid = false;
         } else if (!filter_var($years, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1, "max_range" => 6)))) {
-            array_push(self::$errorMessage, "Please enter a valid number of years (between 1 and 6)");
-            $valid = false;
+            array_push(self::$errorMessage, "The number of years should be between 1 until 6");
         } else {
-            array_push(self::$valid_result, $years);
+            self::$valid_result['years'] = $years;
         }
 
-        // Validate the number of courses, use filter_input to make sure it is integer
+        // Validate the number of courses
         if (empty($courses)) {
             array_push(self::$errorMessage, "Please enter a number of courses");
         } else if (!filter_var($courses, FILTER_VALIDATE_INT)) {
-            array_push(self::$errorMessage, "Please enter a valid number of coures");
-            $valid = false;
+            array_push(self::$errorMessage, "The number of courses should be integer");
         } else {
-            array_push(self::$valid_result, $courses);
+            self::$valid_result['courses'] = $courses;
         }
 
         // Error log
-        if (!$valid) {
+        if (self::$errorMessage) {
             error_log("Validation returns false");
         }
-
-        return $valid;
     }
 }
+?>
